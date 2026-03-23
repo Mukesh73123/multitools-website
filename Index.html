@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MultiTools - All-in-One Utility Suite</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <title>Multi Tools - Free Online Tools</title>
     <style>
         * {
             margin: 0;
@@ -16,254 +12,156 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
+            padding: 20px;
         }
 
-        /* Navigation */
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 5%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
+        .container {
+            max-width: 800px;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 80px 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, white, rgba(255,255,255,0.8));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Tools Grid */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto 5rem;
-            padding: 0 5%;
-        }
-
-        .tool-card {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 2.5rem;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            position: relative;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
         }
 
-        .tool-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
         }
 
-        .tool-card:hover::before {
-            transform: scaleX(1);
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
         }
 
-        .tool-icon {
-            font-size: 3.5rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1.5rem;
+        .tool-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            background: #f8f9fa;
+            padding: 10px;
+            gap: 10px;
+            justify-content: center;
         }
 
-        .tool-card h3 {
-            font-size: 1.5rem;
+        .tab-btn {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
             font-weight: 600;
-            margin-bottom: 1rem;
-            color: #333;
+            color: #495057;
+            transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
-        .tool-card p {
-            color: #666;
-            line-height: 1.6;
+        .tab-btn:hover {
+            background: #4facfe;
+            color: white;
+            border-color: #4facfe;
+            transform: translateY(-2px);
         }
 
-        /* Tool Content */
+        .tab-btn.active {
+            background: #4facfe;
+            color: white;
+            border-color: #4facfe;
+        }
+
         .tool-content {
+            padding: 40px;
+            min-height: 400px;
             display: none;
-            max-width: 800px;
-            margin: 3rem auto;
-            padding: 0 5%;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.5s ease;
         }
 
         .tool-content.active {
             display: block;
-            opacity: 1;
-            transform: translateY(0);
         }
 
-        .tool-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .tool-header h2 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        /* Calculator Styles */
-        .calc-group {
-            background: rgba(255,255,255,0.8);
-            padding: 2rem;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
 
         .input-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
-        .input-group label {
+        label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+            margin-bottom: 8px;
+            font-weight: 600;
             color: #333;
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
-            padding: 1rem 1.5rem;
-            border: 2px solid #e1e5e9;
-            border-radius: 15px;
-            font-size: 1rem;
-            font-family: inherit;
-            background: white;
-            transition: all 0.3s ease;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
         }
 
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
         }
 
         .btn {
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 1.1rem;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 1rem;
+            width: 100%;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(102,126,234,0.4);
+            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
         }
 
-        .result-box {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .result {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 2rem;
-            border-radius: 20px;
-            margin-top: 2rem;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 600;
             display: none;
-            animation: slideUp 0.5s ease;
         }
 
-        .result-box.show {
+        .result.show {
             display: block;
+            animation: slideIn 0.5s ease;
         }
 
-        @keyframes slideUp {
+        @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -271,126 +169,258 @@
             }
         }
 
-        .result-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
-        /* File Upload */
-        .file-upload-area {
-            border: 3px dashed #667eea;
-            border-radius: 20px;
-            padding: 3rem 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(102,126,234,0.05);
+        .password-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
         }
 
-        .file-upload-area:hover, .file-upload-area.dragover {
-            background: rgba(102,126,234,0.1);
-            border-color: #764ba2;
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .file-upload-area i {
-            font-size: 4rem;
-            color: #667eea;
-            margin-bottom: 1rem;
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
         }
 
-        /* Responsive */
+        .length-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .length-control input {
+            width: 80px;
+        }
+
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+            .container {
+                margin: 10px;
+                border-radius: 15px;
             }
-            
-            .hero h1 {
-                font-size: 2.5rem;
+
+            .header h1 {
+                font-size: 1.8em;
             }
-            
-            .tools-grid {
+
+            .tool-content {
+                padding: 25px 20px;
+            }
+
+            .tool-card {
+                padding: 25px 20px;
+            }
+
+            .form-row {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+            }
+
+            .password-options {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-btn {
+                padding: 10px 18px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .tool-tabs {
+                padding: 8px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">MultiTools</div>
-            <ul class="nav-links">
-                <li><a href="#" onclick="showTool('age')" class="active">Age Calculator</a></li>
-                <li><a href="#" onclick="showTool('emi')">EMI Calculator</a></li>
-                <li><a href="#" onclick="showTool('image')">Image Converter</a></li>
-                <li><a href="#" onclick="showTool('pdf')">PDF Tools</a></li>
-            </ul>
+    <div class="container">
+        <div class="header">
+            <h1>🛠️ Multi Tools</h1>
+            <p>Free online tools for everyday calculations</p>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>All-in-One Utility Suite</h1>
-        <p>Powerful tools for everyday calculations, file conversions, and document management. Fast, accurate, and beautifully designed.</p>
-    </section>
+        <div class="tool-tabs">
+            <button class="tab-btn active" data-tool="age">📅 Age Calculator</button>
+            <button class="tab-btn" data-tool="percentage">📊 Percentage</button>
+            <button class="tab-btn" data-tool="emi">🏦 EMI Calculator</button>
+            <button class="tab-btn" data-tool="password">🔐 Password Generator</button>
+            <button class="tab-btn" data-tool="text">🔤 Text Converter</button>
+        </div>
 
-    <!-- Tools Grid -->
-    <section class="tools-grid">
-        <div class="tool-card" onclick="showTool('age')">
-            <i class="fas fa-calendar-alt tool-icon"></i>
-            <h3>Age Calculator</h3>
-            <p>Calculate exact age in years, months, and days with next birthday countdown.</p>
-        </div>
-        <div class="tool-card" onclick="showTool('emi')">
-            <i class="fas fa-calculator tool-icon"></i>
-            <h3>EMI Calculator</h3>
-            <p>Calculate monthly EMI for loans with detailed breakdown and charts.</p>
-        </div>
-        <div class="tool-card" onclick="showTool('image')">
-            <i class="fas fa-image tool-icon"></i>
-            <h3>Image Converter</h3>
-            <p>Convert images between JPG, PNG, WebP, and more formats instantly.</p>
-        </div>
-        <div class="tool-card" onclick="showTool('pdf')">
-            <i class="fas fa-file-pdf tool-icon"></i>
-            <h3>PDF Tools</h3>
-            <p>Merge, split, compress, and convert PDFs with powerful editing tools.</p>
-        </div>
-    </section>
-
-    <!-- Tool Contents -->
-    <!-- Age Calculator -->
-    <section id="age-tool" class="tool-content active">
-        <div class="tool-header">
-            <h2><i class="fas fa-calendar-alt"></i> Age Calculator</h2>
-            <p>Calculate your precise age down to the day</p>
-        </div>
-        <div class="calc-group">
-            <div class="input-group">
-                <label>Birth Date</label>
-                <input type="date" id="age-birthdate">
-            </div>
-            <button class="btn" onclick="calculateAge()">Calculate Age</button>
-            <div id="age-result" class="result-box">
-                <div class="result-value" id="age-value">0 years</div>
-                <div id="age-details"></div>
+        <!-- Age Calculator -->
+        <div id="age" class="tool-content active">
+            <div class="tool-card">
+                <h2 style="margin-bottom: 25px; color: #333; text-align: center;">Age Calculator</h2>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Birth Date</label>
+                        <input type="date" id="birthDate" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Current Date (Optional)</label>
+                        <input type="date" id="currentDate">
+                    </div>
+                </div>
+                <button class="btn" onclick="calculateAge()">Calculate Age</button>
+                <div id="ageResult" class="result"></div>
             </div>
         </div>
-    </section>
 
-    <!-- EMI Calculator -->
-    <section id="emi-tool" class="tool-content">
-        <div class="tool-header">
-            <h2><i class="fas fa-calculator"></i> EMI Calculator</h2>
-            <p>Calculate your loan EMI with detailed breakdown</p>
-        </div>
-        <div class="calc-group">
-            <div class="input-group">
-                <label>Loan Amount (₹)</label>
-                <input type="number" id="emi-principal" placeholder="100000">
+        <!-- Percentage Calculator -->
+        <div id="percentage" class="tool-content">
+            <div class="tool-card">
+                <h2 style="margin-bottom: 25px; color: #333; text-align: center;">Percentage Calculator</h2>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Value</label>
+                        <input type="number" id="value" placeholder="1000" step="any" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Total</label>
+                        <input type="number" id="total" placeholder="5000" step="any" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Percentage (%)</label>
+                    <input type="number" id="percentageValue" placeholder="20" step="any">
+                </div>
+                <button class="btn" onclick="calculatePercentage()">Calculate</button>
+                <div id="percentageResult" class="result"></div>
             </div>
-            <div class="input-group">
-                <label>Interest Rate (% per year)</label>
-                <input type="number" id="emi-rate" step="0.1" placeholder
+        </div>
+
+        <!-- EMI Calculator -->
+        <div id="emi" class="tool-content">
+            <div class="tool-card">
+                <h2 style="margin-bottom: 25px; color: #333; text-align: center;">EMI Calculator</h2>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Loan Amount (₹)</label>
+                        <input type="number" id="loanAmount" placeholder="500000" step="any" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Interest Rate (% per year)</label>
+                        <input type="number" id="interestRate" placeholder="8.5" step="0.01" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Loan Tenure (Years)</label>
+                    <input type="number" id="tenure" placeholder="5" step="0.1" required>
+                </div>
+                <button class="btn" onclick="calculateEMI()">Calculate EMI</button>
+                <div id="emiResult" class="result"></div>
+            </div>
+        </div>
+
+        <!-- Password Generator -->
+        <div id="password" class="tool-content">
+            <div class="tool-card">
+                <h2 style="margin-bottom: 25px; color: #333; text-align: center;">Password Generator</h2>
+                <div class="input-group">
+                    <label>Password Length</label>
+                    <div class="length-control">
+                        <input type="range" id="passwordLength" min="6" max="50" value="12">
+                        <span id="lengthValue">12</span>
+                    </div>
+                </div>
+                <div class="password-options">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="includeUppercase" checked>
+                        <label for="includeUppercase">Uppercase</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="includeLowercase" checked>
+                        <label for="includeLowercase">Lowercase</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="includeNumbers" checked>
+                        <label for="includeNumbers">Numbers</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="includeSymbols">
+                        <label for="includeSymbols">Symbols</label>
+                    </div>
+                </div>
+                <button class="btn" onclick="generatePassword()">Generate Password</button>
+                <div id="passwordResult" class="result">
+                    <div id="generatedPassword"></div>
+                    <button class="btn" onclick="copyPassword()" style="margin-top: 15px; font-size: 14px; padding: 10px 20px;">Copy Password</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Text Converter -->
+        <div id="text" class="tool-content">
+            <div class="tool-card">
+                <h2 style="margin-bottom: 25px; color: #333; text-align: center;">Text Case Converter</h2>
+                <div class="input-group">
+                    <label>Enter Text</label>
+                    <textarea id="inputText" rows="4" placeholder="Type your text here..."></textarea>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 20px;">
+                    <button class="btn" onclick="convertText('uppercase')">UPPERCASE</button>
+                    <button class="btn" onclick="convertText('lowercase')">lowercase</button>
+                    <button class="btn" onclick="convertText('titlecase')">Title Case</button>
+                    <button class="btn" onclick="convertText('sentencecase')">Sentence case</button>
+                </div>
+                <div id="textResult" class="result"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tool = btn.dataset.tool;
+                
+                // Remove active class from all tabs and content
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tool-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                btn.classList.add('active');
+                document.getElementById(tool).classList.add('active');
+                
+                // Hide all results
+                document.querySelectorAll('.result').forEach(r => r.classList.remove('show'));
+            });
+        });
+
+        // Age Calculator
+        function calculateAge() {
+            const birthDate = new Date(document.getElementById('birthDate').value);
+            const currentDate = document.getElementById('currentDate').value ? 
+                new Date(document.getElementById('currentDate').value) : new Date();
+            
+            if (!birthDate || isNaN(birthDate)) {
+                alert('Please enter a valid birth date');
+                return;
+            }
+
+            let ageInYears = currentDate.getFullYear() - birthDate.getFullYear();
+            let monthDiff = currentDate.getMonth() - birthDate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDate.getDate())) {
+                ageInYears--;
+            }
+
+            const months = Math.abs(currentDate.getMonth() - birthDate.getMonth());
+            const days = Math.floor((currentDate - birthDate) / (1000 * 60 * 60 * 24)) % 365;
+
+            document.getElementById('ageResult').innerHTML = `
+                Age: <strong>${ageInYears} years</strong><br>
+                <small>${months} months, ${days
