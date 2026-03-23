@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MultiTools - All-in-One Utility Suite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 5%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, white, rgba(255,255,255,0.8));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 5rem;
+            padding: 0 5%;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        .tool-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .tool-icon {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .tool-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Tool Content */
+        .tool-content {
+            display: none;
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 5%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+
+        .tool-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tool-header h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        /* Calculator Styles */
+        .calc-group {
+            background: rgba(255,255,255,0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(102,126,234,0.4);
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        /* File Upload */
+        .file-upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(102,126,234,0.05);
+        }
+
+        .file-upload-area:hover, .file-upload-area.dragover {
+            background: rgba(102,126,234,0.1);
+            border-color: #764ba2;
+        }
+
+        .file-upload-area i {
+            font-size: 4rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">MultiTools</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showTool('age')" class="active">Age Calculator</a></li>
+                <li><a href="#" onclick="showTool('emi')">EMI Calculator</a></li>
+                <li><a href="#" onclick="showTool('image')">Image Converter</a></li>
+                <li><a href="#" onclick="showTool('pdf')">PDF Tools</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>All-in-One Utility Suite</h1>
+        <p>Powerful tools for everyday calculations, file conversions, and document management. Fast, accurate, and beautifully designed.</p>
+    </section>
+
+    <!-- Tools Grid -->
+    <section class="tools-grid">
+        <div class="tool-card" onclick="showTool('age')">
+            <i class="fas fa-calendar-alt tool-icon"></i>
+            <h3>Age Calculator</h3>
+            <p>Calculate exact age in years, months, and days with next birthday countdown.</p>
+        </div>
+        <div class="tool-card" onclick="showTool('emi')">
+            <i class="fas fa-calculator tool-icon"></i>
+            <h3>EMI Calculator</h3>
+            <p>Calculate monthly EMI for loans with detailed breakdown and charts.</p>
+        </div>
+        <div class="tool-card" onclick="showTool('image')">
+            <i class="fas fa-image tool-icon"></i>
+            <h3>Image Converter</h3>
+            <p>Convert images between JPG, PNG, WebP, and more formats instantly.</p>
+        </div>
+        <div class="tool-card" onclick="showTool('pdf')">
+            <i class="fas fa-file-pdf tool-icon"></i>
+            <h3>PDF Tools</h3>
+            <p>Merge, split, compress, and convert PDFs with powerful editing tools.</p>
+        </div>
+    </section>
+
+    <!-- Tool Contents -->
+    <!-- Age Calculator -->
+    <section id="age-tool" class="tool-content active">
+        <div class="tool-header">
+            <h2><i class="fas fa-calendar-alt"></i> Age Calculator</h2>
+            <p>Calculate your precise age down to the day</p>
+        </div>
+        <div class="calc-group">
+            <div class="input-group">
+                <label>Birth Date</label>
+                <input type="date" id="age-birthdate">
+            </div>
+            <button class="btn" onclick="calculateAge()">Calculate Age</button>
+            <div id="age-result" class="result-box">
+                <div class="result-value" id="age-value">0 years</div>
+                <div id="age-details"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EMI Calculator -->
+    <section id="emi-tool" class="tool-content">
+        <div class="tool-header">
+            <h2><i class="fas fa-calculator"></i> EMI Calculator</h2>
+            <p>Calculate your loan EMI with detailed breakdown</p>
+        </div>
+        <div class="calc-group">
+            <div class="input-group">
+                <label>Loan Amount (₹)</label>
+                <input type="number" id="emi-principal" placeholder="100000">
+            </div>
+            <div class="input-group">
+                <label>Interest Rate (% per year)</label>
+                <input type="number" id="emi-rate" step="0.1" placeholder
